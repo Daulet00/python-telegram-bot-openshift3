@@ -8,7 +8,7 @@ from telegram.ext import CommandHandler, MessageHandler, Updater, Filters, Callb
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-TOKEN = '693266929:AAHv5cYEQmTI0kkClSWNK-CtRr7oqrXp3mI'
+TOKEN = '700883752:AAFJoHWedHj6QguyboNocRa8PQL-l3nN0IA-CtRr7oqrXp3mI'
 
 
 def start(bot, update):
