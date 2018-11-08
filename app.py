@@ -1,5 +1,4 @@
 import logging
-import random
 #from queue import Queue
 #from threading import Thread
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
@@ -8,7 +7,9 @@ from telegram.ext import CommandHandler, MessageHandler, Updater, Filters, Callb
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-TOKEN = '700883752:AAFJoHWedHj6QguyboNocRa8PQL-l3nN0IA'
+TOKEN =  '700883752:AAFJoHWedHj6QguyboNocRa8PQL-l3nN0IA'
+
+
 
 
 def start(bot, update):
@@ -40,45 +41,8 @@ def button(bot, update):
     bot.editMessageText(text=text, chat_id=query.message.chat_id,
                         message_id=query.message.message_id)
 
-
-"""class arr:
-
-    def __init__(self, num, random_num=random.randint(1, 100)):
-        self.random_num = random_num
-        self.num = num
-
-    def checking(self, bot, update):
-        try:
-            if self.random_num == self.num:
-                ar = 'Вы выиграли!'
-            elif self.random_num > self.num:
-                ar = 'Ваше число меньше моего. Попробуйте еще раз :)'
-            elif self.random_num < self.num:
-                ar = 'Ваше число больше моего. Попробуйте еще раз :)'
-            # ar = int(num) * 370
-        except (NameError, SyntaxError, ValueError):
-            ar = "Введите целое число"
-        bot.send_message(chat_id=update.message.chat_id, text=ar)
-
-
-def guessing(bot, update):
-    input_num = int(update.message.text)
-    object_num = arr()
-    object_num.checking(input_num)
-"""
-
-def convert(bot, update, args):
-    try:
-        #dollars = int(update.message.text)
-        dollars = args
-        tenge = dollars * 373
-    except (NameError, SyntaxError, ValueError):
-        tenge = "Введите целое число"
-    bot.send_message(chat_id=update.message.chat_id, text=tenge)
-
-
-#def echo(bot, update):
-#    update.message.reply_text('Вы ввели:  ' + update.message.text)
+def echo(bot, update):
+    update.message.reply_text('Вы ввели:  ' + update.message.text)
 
 
 def error(bot, update, error):
@@ -86,15 +50,7 @@ def error(bot, update, error):
     logger.warning('Update "%s" caused error "%s"' % (update, error))
 
 
-
 def main():
-    """If webhook_url is not passed, run with long-polling.
-    logging.basicConfig(level=logging.WARNING)
-    if webhook_url:
-        bot = Bot(TOKEN)
-        update_queue = Queue()
-        dp = Dispatcher(bot, update_queue)
-    else:"""
     updater = Updater(TOKEN)  # Создаем EventHandler (обработчик событий) и передаем ему токен (ключ) бота.
     #bot = updater.bot
     dp = updater.dispatcher  # Объявление диспетчера, чтобы потом зарегистрировать handlers (обработчики)
@@ -102,21 +58,14 @@ def main():
     dp.add_handler(CommandHandler("help", help))  # Отвечает на команду /help в Телеграм
     dp.add_handler(CommandHandler("convert", convert, pass_args=True))
     dp.add_handler(CallbackQueryHandler(button))
+    dp.add_handler(CommandHandler("guessing", guessing, pass_args=True))
 
     # Для ответа бота на текстовые (не командные) сообщения.
-    #dp.add_handler(MessageHandler(Filters.text, echo))  # Бот отвечает тем сообщением, которое вы ему написали (эхо-бот)
-    # dp.add_handler(MessageHandler(Filters.text, guessing))
+    dp.add_handler(MessageHandler(Filters.text, echo))  # Бот отвечает тем сообщением, которое вы ему написали (эхо-бот)
 
     # Запись всех ошибок
     dp.add_error_handler(error)
 
-    """if webhook_url:
-        bot.set_webhook(webhook_url=webhook_url)
-        thread = Thread(target=dp.start, name='dispatcher')
-        thread.start()
-        return update_queue, bot
-    else:
-        bot.set_webhook()  # Delete webhook"""
     updater.start_polling()  # Start the Bot
     """Бот будет работать до тех пор пока вы не нажмете Ctrl-C
      или процесс не получит SIGINT, SIGTERM или SIGABRT. 
