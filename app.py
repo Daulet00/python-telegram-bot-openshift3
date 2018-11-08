@@ -56,7 +56,6 @@ def main():
     dp = updater.dispatcher  # Объявление диспетчера, чтобы потом зарегистрировать handlers (обработчики)
     dp.add_handler(CommandHandler("start", start))  # Отвечает на команду /start в Телеграм
     dp.add_handler(CommandHandler("help", help))  # Отвечает на команду /help в Телеграм
-    dp.add_handler(CommandHandler("convert", convert, pass_args=True))
     dp.add_handler(CallbackQueryHandler(button))
     dp.add_handler(CommandHandler("guessing", guessing, pass_args=True))
 
